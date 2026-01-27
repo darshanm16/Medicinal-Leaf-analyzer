@@ -229,7 +229,7 @@ async function predictLeaf(file) {
   const formData = new FormData();
   formData.append("image", file);
 
-  fetch("http://127.0.0.1:8000/api/predict/", {
+  fetch("https://saporous-subnacreous-gary.ngrok-free.dev/api/predict/", {
     method: "POST",
     body: formData,
   })
