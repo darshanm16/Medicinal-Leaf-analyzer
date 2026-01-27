@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medicinal Leaf AI Predictor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <svg class="logo" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                </path>
+            </svg>
+            <div>
+                <h1>Medicinal Leaf Analyzer</h1>
+                <div class="subtitle">ML-powered leaf identification system</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('predict')">
+                Prediction
+            </button>
+            <button class="tab-btn" onclick="switchTab('performance')">
+                Performance
+            </button>
+        </div>
+
+        <!-- Prediction Tab -->
+        <div id="predict-tab" class="tab-content active">
+            <div class="grid grid-2">
+                <!-- Upload Section
+                <div class="card">
+                    <h2 class="card-title">Upload or Capture Leaf Image</h2>
+
+                    <div id="upload-area" class="upload-area" onclick="document.getElementById('file-input').click()">
+                        <div class="upload-icon">📤</div>
+                        <p style="font-weight: 500; margin-bottom: 0.5rem;">Click to upload leaf image</p>
+                        <p style="font-size: 0.75rem; color: #6b7280;">PNG, JPG or JPEG (MAX. 5MB)</p>
+                    </div>
+
+                    <img id="preview-image" class="upload-preview hidden" alt="Preview">
+                    <video id="video" class="hidden" autoplay playsinline></video>
+                    <canvas id="canvas" class="canvas-hidden"></canvas>
+
+                    <input type="file" id="file-input" accept="image/*" class="hidden"
+                        onchange="handleFileUpload(event)">
+
+                    <div class="camera-controls">
+                        <button class="btn btn-primary" onclick="startCamera()">📷 Open Camera</button>
+                        <button class="btn btn-secondary hidden" id="capture-btn" onclick="capturePhoto()">📸
+                            Capture</button>
+                        <button class="btn btn-secondary hidden" id="close-camera-btn" onclick="closeCamera()">❌
+                            Close</button>
+                    </div>
+
+                    <div id="loading" class="loading hidden">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 0.5rem; color: #6b7280;">Analyzing leaf...</p>
+                    </div>
+                </div> -->
+
+                <div class="card">
+                    <h2 class="card-title">Upload or Capture Leaf Image</h2>
+
+                    <!-- Unified Upload + Preview Box -->
+                    <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()">
+                        <div id="upload-placeholder">
+                            <div class="upload-icon">🌿</div>
+                            <p style="font-weight: 500">Click to upload leaf image</p>
+                            <p style="font-size: 0.75rem; color: #6b7280">
+                                PNG, JPG, JPEG
+                            </p>
+                        </div>
+
+                        <!-- Preview INSIDE SAME BOX -->
+                        <img id="preview-image" class="upload-preview hidden" alt="Leaf Preview" />
+
+                        <!-- Camera Preview -->
+                        <video id="video" class="hidden" autoplay playsinline></video>
+                        <canvas id="canvas" class="canvas-hidden"></canvas>
+                    </div>
+
+                    <input type="file" id="file-input" accept="image/*" class="hidden"
+                        onchange="handleFileUpload(event)" />
+
+                    <div class="camera-controls">
+                        <button class="btn btn-primary" onclick="startCamera()">
+                            📷 Open Camera
+                        </button>
+                        <button class="btn btn-secondary hidden" id="capture-btn" onclick="capturePhoto()">
+                            📸 Capture
+                        </button>
+                        <button class="btn btn-secondary hidden" id="close-camera-btn" onclick="closeCamera()">
+                            ❌ Close
+                        </button>
+                    </div>
+
+                    <div id="loading" class="loading hidden">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 0.5rem; color: #6b7280">
+                            Analyzing leaf...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="card">
+                    <h2 class="card-title">Prediction Results</h2>
+
+                    <div id="empty-state" class="empty-state">
+                        <div class="empty-icon">📊</div>
+                        <p>Upload or capture an image to see results</p>
+                    </div>
+
+                    <div id="results" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Tab -->
+        <div id="performance-tab" class="tab-content">
+            <!-- Metrics Cards -->
+            <div class="grid grid-6">
+                <div class="metric-card">
+                    <div class="metric-label">Overall Accuracy</div>
+                    <div class="metric-value" style="
+                background: linear-gradient(135deg, #ff4d4d, #b30000);
+                webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+              ">
+                        93.3%
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Precision</div>
+                    <div class="metric-value">94%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Recall</div>
+                    <div class="metric-value">93%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">F1-Score</div>
+                    <div class="metric-value">93%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Training Time</div>
+                    <div class="metric-value">7.2 min</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Inference Time</div>
+                    <div class="metric-value">7.41 ms</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-2" style="margin-top: 1.5rem">
+                <div class="card">
+                    <h3 class="card-title">Per-Class Performance</h3>
+                    <div class="chart-container">
+                        <canvas id="classChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Confusion Matrix Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="confusionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">ROC Curve (Resnet + SVM)</h3>
+                    <div class="chart-container">
+                        <canvas id="accuracyChart"></canvas>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="card">
+                    <h3 class="card-title">Models Comparison</h3>
+                    <div class="chart-container">
+                        <canvas id="lossChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Medicinal Leaf AI Predictor. Powered by Deep Learning.</p>
+        <p style="margin-top: 0.5rem">
+            Always consult healthcare professionals before using medicinal plants.
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
