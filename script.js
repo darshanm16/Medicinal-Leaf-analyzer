@@ -506,22 +506,22 @@ new Chart(document.getElementById("classChart"), {
       datasets: [
         {
           label: "Accuracy",
-          data: [93.4, 87.6, 92],
+          data: [93.3, 87.6, 92],
           backgroundColor: "#f59e0b",
         },
         {
           label: "Precision",
-          data: [94, 87, 92],
+          data: [89.1, 87, 92],
           backgroundColor: "#10b981",
         },
         {
           label: "Recall",
-          data: [93, 87, 90],
+          data: [97.7, 87, 90],
           backgroundColor: "#3b82f6",
         },
         {
           label: "F1-Score",
-          data: [93, 87, 91],
+          data: [93.2, 87, 91],
           backgroundColor: "#8b5cf6",
         },
       ],
